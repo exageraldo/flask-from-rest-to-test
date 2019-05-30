@@ -13,4 +13,14 @@ class UserModel(Document):
         required=True,
         unique=True
     )
-    
+
+    def to_dict(self):
+        return {
+            "username": self.username,
+            "email": self.email
+        }
+
+    @classmethod
+    def get_all_users(cls):
+        all_users = cls.object
+        return [user.to_dict() for user in all_users]
