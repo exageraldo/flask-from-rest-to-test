@@ -19,11 +19,6 @@ class UserModel(Document):
     )
 
     @staticmethod
-    def get_all_users(cls):
-        all_users = cls.query.all()
-        return [user.to_dict() for user in all_users]
-
-    @staticmethod
     def generate_hash(password):
         return sha1(password.encode('utf-8')).hexdigest()
 
@@ -36,3 +31,14 @@ class UserModel(Document):
         current_user = UserModel.objects(
             Q(username=identity) | Q(email=identity)).first()
         return current_user
+
+    def to_dict(self):
+        return {
+            "username": self.username,
+            "email": self.email
+        }
+
+    @classmethod
+    def get_all_users(cls):
+        all_users = cls.object
+        return [user.to_dict() for user in all_users]
