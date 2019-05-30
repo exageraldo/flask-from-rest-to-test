@@ -4,6 +4,7 @@ from mongoengine.queryset.visitor import Q
 from flask_mongoengine import Document
 from mongoengine import StringField, ObjectIdField
 
+
 class UserModel(Document):
     _id = ObjectIdField(required=False)
     username = StringField(
@@ -16,8 +17,8 @@ class UserModel(Document):
         required=True,
         unique=True
     )
-    
-    @classmethod
+
+    @staticmethod
     def get_all_users(cls):
         all_users = cls.query.all()
         return [user.to_dict() for user in all_users]
@@ -32,6 +33,6 @@ class UserModel(Document):
 
     @staticmethod
     def find_by_credential(identity):
-        current_user = User.objects(
+        current_user = UserModel.objects(
             Q(username=identity) | Q(email=identity)).first()
         return current_user

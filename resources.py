@@ -45,7 +45,7 @@ class UserLogin(Resource):
         if not current_user:
             return jsonify({'msg': 'User {} doesn\'t exist'.format(username)}), 401
 
-        if User.verify_hash(data['password'], current_user.password):
+        if UserModel.verify_hash(data['password'], current_user.password):
             access_token = create_access_token(
                 identity=username)
             refresh_token = create_refresh_token(
