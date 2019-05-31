@@ -10,6 +10,7 @@ from flask_jwt_extended import (
     set_refresh_cookies
 )
 
+
 class User(Resource):
     def get(self):
         return UserModel.get_all_users(), 200
@@ -53,12 +54,8 @@ class UserLogin(Resource):
             refresh_token = create_refresh_token(
                 identity=username)
 
-            response = {'msg': 'Logged in as {}'.format(
+            msg = {'msg': 'Logged in as {}'.format(
                 current_user.username), 'token:': access_token}
-
-            #set_access_cookies(response, access_token)
-            #set_refresh_cookies(response, refresh_token)
-
-            return response, 200
+            return msg, 200
         else:
             return {'msg': 'Wrong credentials'}, 401
