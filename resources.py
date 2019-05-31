@@ -43,20 +43,19 @@ class UserLogin(Resource):
 
         current_user = UserModel.find_by_credential(identity=username)
         if not current_user:
-            return jsonify({'msg': 'User {} doesn\'t exist'.format(username)}), 401
-
+            return {'msg': 'User {} doesn\'t exist'.format(username)}, 401
         if UserModel.verify_hash(data['password'], current_user.password):
             access_token = create_access_token(
                 identity=username)
             refresh_token = create_refresh_token(
                 identity=username)
 
-            response = jsonify(
-                {'msg': 'Logged in as {}'.format(current_user.username), 'token:': access_token})
+            response = {'msg': 'Logged in as {}'.format(
+                current_user.username), 'token:': access_token}
 
             set_access_cookies(response, access_token)
             set_refresh_cookies(response, refresh_token)
 
             return response, 200
         else:
-            return jsonify({'msg': 'Wrong credentials'}), 401
+            return {'msg': 'Wrong credentials'}, 401

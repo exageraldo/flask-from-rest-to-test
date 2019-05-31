@@ -12,7 +12,7 @@ class UserModel(Document):
         required=True,
         unique=True
     )
-    username = StringField(
+    email = StringField(
         max_length=120,
         required=True,
         unique=True
