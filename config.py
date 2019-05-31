@@ -9,7 +9,7 @@ SQLALCHEMY_DATABASE_URI="sqlite:///flask.sqlite"
 
 # MONGO
 MONGODB_DB = 'flask-grupy'
-MONGODB_HOST = 'localhost'
+MONGODB_HOST = 'mongodb'
 MONGODB_PORT = 27017
 MONGODB_USERNAME = 'flask'
 MONGODB_PASSWORD = 'grupy'
