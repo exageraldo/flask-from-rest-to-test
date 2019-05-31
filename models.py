@@ -6,16 +6,19 @@ from mongoengine import StringField, ObjectIdField
 
 
 class UserModel(Document):
-    _id = ObjectIdField(required=False)
-    username = StringField(
-        max_length=120,
-        required=True,
-        unique=True
-    )
+    _id = ObjectIdField(required=False) 
     email = StringField(
         max_length=120,
         required=True,
         unique=True
+    ) 
+    username = StringField(
+        max_length=120,
+        required=True,
+        unique=True
+    ) 
+    password = StringField(
+        required=True
     )
 
     @staticmethod
@@ -34,11 +37,11 @@ class UserModel(Document):
 
     def to_dict(self):
         return {
-            "username": self.username,
-            "email": self.email
+            "email": self.email,
+            "username": self.username
         }
 
     @classmethod
     def get_all_users(cls):
-        all_users = cls.object
+        all_users = cls.objects()
         return [user.to_dict() for user in all_users]

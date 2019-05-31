@@ -1,22 +1,25 @@
 from flask_restful import Resource, reqparse
 from flask import request
 from models import UserModel
-from serializers import UserSchema
 
 from flask_jwt_extended import (
+    JWTManager,
     create_access_token,
-    create_refresh_token
+    create_refresh_token,
+    set_access_cookies,
+    set_refresh_cookies
 )
-
 
 class User(Resource):
     def get(self):
-        return {'msg': 'Gabriela'}, 200
-        # return UserModel.get_all_users(), 200
+        return UserModel.get_all_users(), 200
 
     def post(self):
         data = request.get_json() or {}
-        user = UserSchema.model_validate(data)
+        user = UserModel(
+            username=data['username'],
+            email=data['email'],
+            password=UserModel.generate_hash(data['password']))
         if user:
             user.save()
             return 'User created', 200
@@ -53,8 +56,8 @@ class UserLogin(Resource):
             response = {'msg': 'Logged in as {}'.format(
                 current_user.username), 'token:': access_token}
 
-            set_access_cookies(response, access_token)
-            set_refresh_cookies(response, refresh_token)
+            #set_access_cookies(response, access_token)
+            #set_refresh_cookies(response, refresh_token)
 
             return response, 200
         else:
