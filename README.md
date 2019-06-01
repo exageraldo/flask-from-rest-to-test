@@ -50,3 +50,34 @@ class HelloWorld(Resource):
 
 api.add_resource(HelloWorld, '/')
 ```
+
+## JSON Web Token
+**JWT (JSON Web Token)** é um sistema de transferência de dados que pode ser enviado via POST ou em um cabeçalho HTTP (header) de maneira “segura”, essa informação é assinada digitalmente por um algoritmo HMAC, ou um par de chaves pública/privada usando RSA.
+
+## Flask-JWT-Extended
+```
+pip install flask-jwt-extended
+```
+```python
+from flask import Flask
+from flask_restful import Resource, Api
+from flask_jwt_extended import (
+    JWTManager, jwt_required
+)
+
+app = Flask(__name__)
+app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
+api = Api(app)
+jwt = JWTManager(app)
+
+class HelloWorld(Resource):
+    @jwt_required
+    def get(self):
+        return {'hello': 'world'}
+
+api.add_resource(HelloWorld, '/')
+```
+Usamos `jwt_required` para proteger uma rota, tudo o que precisamos fazer é enviar o JWT com a requisição. Por padrão, isso é feito pelo cabeçalho, que tem que ser enviado no seguitne modelo:
+```
+Authorization: Bearer <access_token>
+```
