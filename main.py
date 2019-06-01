@@ -1,8 +1,8 @@
 from flask import Flask
 # from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
-from flask_migrate import Migrate
-from flask_marshmallow import Marshmallow
+# from flask_migrate import Migrate
+# from flask_marshmallow import Marshmallow
 from flask_cors import CORS 
 from flask_jwt_extended import JWTManager
 from flask_mongoengine import MongoEngine
@@ -14,9 +14,9 @@ CORS(app)
 configure_app(app)
 db = MongoEngine(app)
 # db = SQLAlchemy(app)
-ma = Marshmallow(app)
+# ma = Marshmallow(app)
 api = Api(app)
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
 from resources import User, UserLogin, Users
