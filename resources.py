@@ -7,13 +7,23 @@ from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     set_access_cookies,
-    set_refresh_cookies
+    set_refresh_cookies,
+    jwt_required
 )
 
 
-class User(Resource):
+class Users(Resource):
+    @jwt_required
     def get(self):
         return UserModel.get_all_users(), 200
+
+
+class User(Resource):
+    def get(self, username):
+        user = UserModel.find_by_credential(identity=username)
+        if not user:
+            return {'msg': 'User Not Found'}, 404
+        return {'user': user.email}, 200
 
     def post(self):
         data = request.get_json() or {}
@@ -23,8 +33,8 @@ class User(Resource):
             password=UserModel.generate_hash(data['password']))
         if user:
             user.save()
-            return 'User created', 200
-        return 'User error', 409
+            return {'msg': 'User created'}, 200
+        return {'msg': 'User error'}, 409
 
 
 class UserLogin(Resource):
@@ -58,47 +68,4 @@ class UserLogin(Resource):
                 current_user.username), 'token:': access_token}
             return msg, 200
         else:
-<<<<<<< Updated upstream
             return {'msg': 'Wrong credentials'}, 401
-=======
-            return jsonify({'msg': 'Wrong credentials'}), 401
-
-
-class UserSignin(Resource):
-    parser = reqparse.RequestParser()
-    parser.add_argument('username',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
-    parser.add_argument('password',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank."
-                        )
-
-    def post(self):
-        data = self.parser.parse_args()
-        username = data['username']
-        password = data['password']
-
-        current_user = UserModel.find_by_credential(identity=username)
-        if current_user:
-            return jsonify({'msg': 'User {} already exist'.format(username)}), 401
-
-        if UserModel.verify_hash(data['password'], current_user.password):
-            access_token = create_access_token(
-                identity=username)
-            refresh_token = create_refresh_token(
-                identity=username)
-
-            response = jsonify(
-                {'msg': 'Logged in as {}'.format(current_user.username), 'token:': access_token})
-
-            set_access_cookies(response, access_token)
-            set_refresh_cookies(response, refresh_token)
-
-            return response, 200
-        else:
-            return jsonify({'msg': 'Wrong credentials'}), 401
->>>>>>> Stashed changes
