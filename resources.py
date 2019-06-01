@@ -65,7 +65,7 @@ class UserLogin(Resource):
                 identity=username)
 
             msg = {'msg': 'Logged in as {}'.format(
-                current_user.username), 'token:': access_token}
+                current_user.username), 'token': access_token}
             return msg, 200
         else:
             return {'msg': 'Wrong credentials'}, 401
