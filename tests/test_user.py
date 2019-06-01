@@ -41,4 +41,15 @@ class UserTestCase(unittest.TestCase):
 
     def test_user_data(self):
         user_ = UserModel.find_by_credential('lucas@gmail.com')
-        self.assertEqual(user.get('username'), user_.username)  
+        assert user.get('username') == user_.username
+
+    def test_user_creation(self):
+        user_data = { 
+            'username': 'geraldo',
+            'email': 'geraldo@gmail.com',  
+            'password': UserModel.generate_hash('123')
+        }
+        response = self.app.post('/user', json=user_data)
+        assert 'User created' == response.json.get('msg')
+        assert 200 == response.status_code
+        
