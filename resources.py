@@ -11,9 +11,17 @@ from flask_jwt_extended import (
 )
 
 
-class User(Resource):
+class Users(Resource):
     def get(self):
         return UserModel.get_all_users(), 200
+
+
+class User(Resource):
+    def get(self, username):
+        user = UserModel.find_by_credential(identity=username)
+        if not user:
+            return {'msg': 'User Not Found'}, 404
+        return {'user': user.email}, 200
 
     def post(self):
         data = request.get_json() or {}
@@ -23,8 +31,8 @@ class User(Resource):
             password=UserModel.generate_hash(data['password']))
         if user:
             user.save()
-            return 'User created', 200
-        return 'User error', 409
+            return {'msg': 'User created'}, 200
+        return {'msg': 'User error'}, 409
 
 
 class UserLogin(Resource):
