@@ -20,9 +20,9 @@ class UserTestCase(unittest.TestCase):
 
     def test_get_users(self):
         response = self.app.get('/users')
-        assert response.status_code == 200
-        assert len(response.get_json()) == 1
-        assert response.status_code == 200
+        assert response.status_code == 401
+        #assert len(response.get_json()) == 1
+        #assert response.status_code == 401
 
     def test_get_user(self): 
         response = self.app.get('/user/lucas')

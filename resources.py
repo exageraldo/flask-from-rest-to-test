@@ -7,11 +7,13 @@ from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     set_access_cookies,
-    set_refresh_cookies
+    set_refresh_cookies,
+    jwt_required
 )
 
 
 class Users(Resource):
+    @jwt_required
     def get(self):
         return UserModel.get_all_users(), 200
 
