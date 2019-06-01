@@ -23,6 +23,7 @@ services:
     volumes:
       - .:/flask-grupy
     restart: always
-    command: bash -c "python ./run.py db upgrade && python ./run.py server --host 0.0.0.0 --port 5000"
+    command: bash -c "cd flask-run/ && flask run"
+
 volumes:
   mongodb-data:
