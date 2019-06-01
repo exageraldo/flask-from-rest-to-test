@@ -123,3 +123,42 @@ class HelloWorld(Resource):
         return {'hello': 'world'}
 ```
 
+## Mongo
+MongoDB é um software de banco de dados orientado a documentos livre, de código aberto e multiplataforma, escrito na linguagem C++. Classificado como um programa de banco de dados NoSQL, o MongoDB usa documentos semelhantes a JSON com esquemas.
+
+## Flask-MongoEngine
+Um plugin do Flask que fornece integração com o MongoEngine.
+
+```
+pip install flask-mongoengine
+```
+```python
+from flask import Flask
+from flask_restful import Resource, Api
+from flask_jwt_extended import (
+    JWTManager, jwt_required
+)
+from flask_cors import CORS, cross_origin
+from flask_mongoengine import MongoEngine
+
+app = Flask(__name__)
+CORS(app) # Adiciona em todas as rotas
+app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
+app.config['MONGODB_SETTINGS'] = {
+    'db': 'grupy',
+    'host': 'localhost',
+    'port': 27017,
+    'username':'user',
+    'password':'pw123'
+}
+api = Api(app)
+jwt = JWTManager(app)
+db = MongoEngine(app)
+
+class HelloWorld(Resource):
+    @jwt_required
+    def get(self):
+        return {'hello': 'world'}
+
+api.add_resource(HelloWorld, '/')
+```
