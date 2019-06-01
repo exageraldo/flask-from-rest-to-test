@@ -1,6 +1,3 @@
-[![pipeline status](https://gitlab.com/gabicavalcantesilva/flask-api-ci/badges/master/pipeline.svg)](https://gitlab.com/lucasalveslm/jeanne/commits/master)
-[![coverage report](https://gitlab.com/gabicavalcantesilva/flask-api-ci/badges/master/coverage.svg?job=coverage)](https://gitlab.com/lucasalveslm/jeanne/-/jobs/artifacts/master/file/htmlcov/index.html?job=coverage)
-
 # Flask: do Rest ao Test
 
 Esse material leva em consideração que você já saiba os conceitos básicos de Python. Será dada uma introdução ao microframework Flask e mostrado alguns plugins complementares para levantar seu primeiro sistema web completo.
