@@ -177,3 +177,6 @@ class HelloWorld(Resource):
 
 api.add_resource(HelloWorld, '/')
 ```
+
+## Testes
+Ou você cria testes para a sua aplicação, ou você deixa seus clientes testarem pra você
