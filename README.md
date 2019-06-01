@@ -28,3 +28,25 @@ E para rodar o servidor:
 $ export FLASK_APP=hello.py
 $ flask run
 ```
+
+## Flask-Restful
+O Flask-RESTful é uma extensão do Flask que adiciona suporte para a construção rápida e prática de APIs REST.
+
+```
+pip install flask-restful
+```
+Agora vamos transformar tudo em Rest!
+
+```python
+from flask import Flask
+from flask_restful import Resource, Api
+
+app = Flask(__name__)
+api = Api(app)
+
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world'}
+
+api.add_resource(HelloWorld, '/')
+```
