@@ -3,8 +3,7 @@ import os
 
 class Config(object):
     DEBUG = False
-    TESTING = False
-    CSRF_ENABLED = True 
+    TESTING = False 
 
     JWT_TOKEN_LOCATION=['headers']
     JWT_ACCESS_TOKEN_EXPIRES=20

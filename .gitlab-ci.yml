@@ -24,6 +24,6 @@ coverage:
     paths:
       - htmlcov/
   script:
-    - coverage run -m pytest
+    - coverage run --source=. -m pytest
     - coverage html
-    - coverage report -m
+    - coverage report -m ./*
